@@ -60,6 +60,34 @@ from your browser:
 - Parallel-safe: temp files are derived from the output name, so multiple
   instances with different output names won't collide.
 
+## When to use this vs. yt-dlp
+
+For most Vimeo videos, **just use [yt-dlp](https://github.com/yt-dlp/yt-dlp)**:
+
+```bash
+yt-dlp "https://vimeo.com/VIDEO_ID"
+```
+
+It handles auth, format selection, and muxing automatically, and it's the right
+default. This script is a **fallback** for the case where yt-dlp can't reach the
+video — e.g. private videos behind a review link, where the `vimeo.com/<id>` and
+`player.vimeo.com/video/<id>` pages return 404 and yt-dlp falls back to its
+generic extractor (which just downloads the `playlist.json` file instead of the
+video). If you can still extract the `playlist.json` URL from the browser, this
+script works off that directly.
+
+## Prior art / alternatives
+
+The "parse `playlist.json` and reassemble DASH segments" approach is
+well-established. Other tools that do similar things:
+
+- [akiomik/vimeo-dl](https://github.com/akiomik/vimeo-dl) (Go)
+- [DevLARLEY/vimeo-downloader](https://github.com/DevLARLEY/vimeo-downloader)
+- [martiGIT/vimeo-download-by-playlist](https://github.com/martiGIT/vimeo-download-by-playlist)
+
+This implementation aims to stay small (single file, standard library only) while
+adding concurrent downloads, resume-on-interrupt, and automatic retries.
+
 ## Notes
 
 - Output size = duration × bitrate. A multi-hour 1080p video can be several GB.
