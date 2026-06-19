@@ -1,0 +1,21 @@
+# Media output
+*.mp4
+*.mkv
+*.webm
+ 
+# Temp / resume artifacts
+*.part
+*.progress
+*._video.mp4
+*._audio.mp4
+ 
+# Manifests — these contain session IDs and signed tokens tied to YOUR account.
+# Never commit them.
+*.json
+playlist*.json
+ 
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
